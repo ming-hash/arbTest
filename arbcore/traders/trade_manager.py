@@ -3,6 +3,12 @@ import sys
 import time
 import socket
 
+# Ensure LOFarb directory is in sys.path so we can find account_private.py when imported from elsewhere
+_tm_dir = os.path.dirname(os.path.abspath(__file__))
+_lof_dir = os.path.normpath(os.path.join(_tm_dir, "..", "..", "LOFarb"))
+if os.path.exists(_lof_dir) and _lof_dir not in sys.path:
+    sys.path.append(_lof_dir)
+
 # 导入本地敏感配置
 try:
     from account_private import GJS_ACCOUNT
@@ -47,7 +53,8 @@ class TradeManager:
             self.tqconst = tqconst
             
             # 初始化并获取账户句柄
-            tq.initialize(__file__)
+            tdx_plugin_path = os.path.join(tdx_api_path, 'tqcenter.py')
+            tq.initialize(tdx_plugin_path)
             self.tdx_account_id = tq.stock_account()
             
             if self.tdx_account_id and self.tdx_account_id > 0:
@@ -87,7 +94,7 @@ class TradeManager:
     #             if connect_result == 0:
     #                 self.xt_trader.subscribe(self.xt_account)
     #                 self.xtquant_available = True
-    #                 print(f"SUCCESS: [TradeManager] 已挂载【国金MiniQMT】原生直连通道 (账号:{self.xt_account.account_id})")
+    #                 print(f"✅ SUCCESS: [TradeManager] 已挂载【国金MiniQMT】原生直连通道 (账号:{self.xt_account.account_id})")
     #             else:
     #                 print(f"WARNING: [TradeManager] 国金QMT客户端连接失败 (错误码: {connect_result})")
     #     except Exception as e:
