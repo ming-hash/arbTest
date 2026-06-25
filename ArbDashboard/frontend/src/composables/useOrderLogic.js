@@ -1,6 +1,6 @@
 /**
  * 公共下单逻辑 composable
- * 实时沙盘 (Analysis.vue) 和 懒人页面 (GodMode.vue) 共用
+ * 实时沙盘 (Analysis.vue) 和 懒人页面 (LazyMode.vue) 共用
  */
 import { useMessage, useDialog } from 'naive-ui'
 import { placeOrder } from '../api/tradingApi'

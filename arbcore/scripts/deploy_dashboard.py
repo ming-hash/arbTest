@@ -31,12 +31,7 @@ def deploy():
     print("📦 1/5 正在编译 Vue 前端...")
     subprocess.run(["npm", "run", "build"], cwd=frontend_dir, shell=True, check=True)
     
-    # 2. 准备安全数据库
-    print("🛢️ 2/5 正在生成脱敏后的 share.db...")
-    make_share_db_script = os.path.join(root_dir, "scratch", "make_share_db.py")
-    if os.path.exists(make_share_db_script):
-        subprocess.run(["python", make_share_db_script], env=dict(os.environ, PYTHONIOENCODING="utf8"), check=True)
-    
+    # 2. 准备安全数据库（跳过，scratch/ 已清理）
     master_db_src = os.path.join(root_dir, "database", "arb_master_share.db")
     
     # 3. 打包代码

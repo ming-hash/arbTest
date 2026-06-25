@@ -344,7 +344,7 @@ class DailyUpdater(BaseApp):
             conn.close()
             
             if yaml_updated:
-                config_file = os.path.join(os.path.dirname(__file__), "lof_config.yaml")
+                config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config", "lof_config.yaml")
                 with open(config_file, 'w', encoding='utf-8') as f:
                     yaml.safe_dump(self.config, f, allow_unicode=True, sort_keys=False)
                 self.logger.info("✅ lof_config.yaml 文件已成功覆写更新！")
@@ -827,8 +827,8 @@ class DailyUpdater(BaseApp):
 
     def _step10_calculate_static_valuation(self):
         """步骤十：基于同步后的因子数据，计算所有基金的静态估值 (static_val)"""
-        scripts_dir = os.path.dirname(os.path.abspath(__file__))
-        config_path = os.path.join(scripts_dir, 'lof_config.yaml')
+        config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config")
+        config_path = os.path.join(config_dir, 'lof_config.yaml')
         if not os.path.exists(config_path):
             self.logger.warning("⚠️ [静态估值] lof_config.yaml 不存在，跳过")
             return

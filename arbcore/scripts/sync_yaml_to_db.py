@@ -5,7 +5,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from database.db_manager import DatabaseManager
 
-YAML_PATH = os.path.join(os.path.dirname(__file__), 'lof_config.yaml')
+YAML_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'config', 'lof_config.yaml')
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'database', 'arb_master.db')
 
 with open(YAML_PATH, 'r', encoding='utf-8') as f:
