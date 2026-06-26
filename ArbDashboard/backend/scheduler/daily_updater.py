@@ -3,7 +3,7 @@
 import os
 import sys
 # 自动引导路径：确保能找到根目录下的 arbcore
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', '..')))
 import json
 import yaml
 import logging
@@ -64,7 +64,7 @@ class DailyUpdater(BaseApp):
             return []
         
         # 数据目录迁移到 ArbDashboard/data/（与脚本目录解耦）
-        local_sync_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "ArbDashboard", "data", "vps_sync"))
+        local_sync_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "ArbDashboard", "data", "vps_sync"))
         os.makedirs(local_sync_dir, exist_ok=True)
 
         self.logger.info(f"[VPS] 正在扫描云端所有缺失的 {data_type} 历史数据...")
@@ -192,7 +192,7 @@ class DailyUpdater(BaseApp):
             if str(fund.get('code', '')) != '161226' and fund.get('data_source') == 'woody'
         ]
         # 数据目录迁移到 ArbDashboard/data/（与脚本目录解耦）
-        backup_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "ArbDashboard", "data", "woodyAPI"))
+        backup_dir = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "ArbDashboard", "data", "woodyAPI"))
         
         # Level 0: VPS Siphon (支持多日历史自动补全)
         vps_history_data = self._try_sync_all_from_vps('woody')
@@ -344,7 +344,7 @@ class DailyUpdater(BaseApp):
             conn.close()
             
             if yaml_updated:
-                config_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config", "lof_config.yaml")
+                config_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "arbcore", "config", "lof_config.yaml")
                 with open(config_file, 'w', encoding='utf-8') as f:
                     yaml.safe_dump(self.config, f, allow_unicode=True, sort_keys=False)
                 self.logger.info("✅ lof_config.yaml 文件已成功覆写更新！")
@@ -852,7 +852,7 @@ class DailyUpdater(BaseApp):
 
     def _step10_calculate_static_valuation(self):
         """步骤十：基于同步后的因子数据，计算所有基金的静态估值 (static_val)"""
-        config_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "config")
+        config_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "arbcore", "config")
         config_path = os.path.join(config_dir, 'lof_config.yaml')
         if not os.path.exists(config_path):
             self.logger.warning("⚠️ [静态估值] lof_config.yaml 不存在，跳过")
